@@ -225,7 +225,7 @@ friend std::ostream& operator<<(std::ostream&, Vector<A> const&);
 ---
 ### Other
 - Overloaded std::swap
-
+- Also you can use std::sort & range-based loops with it
 
 
 
