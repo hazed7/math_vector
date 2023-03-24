@@ -170,6 +170,11 @@ friend T dot_product(const Vector<A>&);
 friend Vector cross_product(const Vector<A>&, const Vector<A>&);
 ```
 
+- Normalize the vector to have a magnitude of 1
+```cpp
+
+```
+void normalize();
 ---
 
 ### IO
