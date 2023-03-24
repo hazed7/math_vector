@@ -35,6 +35,7 @@ public:
     
     void normalize();
     void clear();
+    void resize(std::size_t, const T&);
     
     Vector subvec(std::size_t, std::size_t) const;
     
@@ -251,6 +252,21 @@ template <typename T>
 void Vector<T>::clear() {
     size_ = 0;
     entries.reset();
+}
+
+template <typename T>
+void Vector<T>::resize(std::size_t size, const T& default_value) {
+    if (size == size_)
+        return;
+    
+    std::unique_ptr<T[]> new_entries = std::make_unique<T[]>(size);
+    std::size_t copy_size = std::min(size_, size);
+    
+    std::copy(entries.get(), entries.get() + copy_size, new_entries.get());
+    std::fill(new_entries.get() + copy_size, new_entries.get() + size, default_value);
+    
+    entries = std::move(new_entries);
+    size_ = size;
 }
 
 template <typename T>

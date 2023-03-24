@@ -133,6 +133,11 @@ Vector subvec(std::size_t, std::size_t) const;
 void clean();
 ```
 
+- Resize vector to a gived size and initialize the new elements to desired value
+```cpp
+void resize(std::size_t size, const T& default_value);
+```
+
 ---
 
 ### Operations
