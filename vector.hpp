@@ -25,6 +25,8 @@ public:
     std::size_t size() const;
     T magnitude() const;
     
+    T mean() const;
+    
     std::variant<T, std::vector<std::size_t>> max() const;
     std::variant<T, std::vector<std::size_t>> min() const;
     
@@ -55,6 +57,14 @@ private:
     std::size_t size_;
     std::unique_ptr<T[]> entries;
 };
+
+// overload std::swap
+namespace std {
+    template <typename T>
+    void swap(Vector<T>& v1, Vector<T>& v2) noexcept(noexcept(v1.swap(v2))) {
+        v1.swap(v2);
+    }
+}
 
 // print vector elements
 template <typename T>
@@ -137,6 +147,14 @@ std::size_t Vector<T>::size() const {
 template <typename T>
 T Vector<T>::magnitude() const {
     return std::sqrt(dot_product(*this, *this));
+}
+
+template <typename T>
+T Vector<T>::mean() const {
+    if (size_ == 0)
+        throw std::logic_error("Vector is empty");
+    
+    return sum() / size_;
 }
 
 /*
