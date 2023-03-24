@@ -130,7 +130,7 @@ Vector subvec(std::size_t, std::size_t) const;
 
 - Clear vector
 ```cpp
-void clean();
+void clear();
 ```
 
 - Resize vector to a gived size and initialize the new elements to desired value
