@@ -125,7 +125,7 @@ std::variant<T, std::vector<std::size_t>> min() const;
 
 - Get subvector of the vector between two given indices
 ```cpp
-Vector<T> Vector<T>::subvec(std::size_t, std::size_t) const;
+Vector subvec(std::size_t, std::size_t) const;
 ```
 
 ---
