@@ -35,6 +35,8 @@ public:
     
     void normalize();
     
+    Vector subvec(std::size_t, std::size_t) const;
+    
     T& operator[](std::size_t);
     bool operator==(const Vector&) const;
     bool operator!=(const Vector&) const;
@@ -242,6 +244,17 @@ void Vector<T>::normalize() {
         return;
     
     *this *= 1 / mag;
+}
+
+template <typename T>
+Vector<T> Vector<T>::subvec(std::size_t start, std::size_t end) const {
+    if (start >= end || end > size_)
+        throw std::out_of_range("Invalid range for subvector");
+    
+    Vector<T> sub(end - start);
+    std::copy(entries.get() + start, entries.get() + end,sub.entries.get());
+    
+    return sub;
 }
 
 template <typename T>
