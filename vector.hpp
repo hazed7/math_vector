@@ -51,7 +51,8 @@ public:
     
     void insert(std::size_t, std::initializer_list<T>);
     
-    void remove(std::size_t);
+    void erase(std::size_t);
+    void erase(std::size_t first, std::size_t last);
     
     T& operator[](std::size_t);
     const T& operator[](std::size_t) const;
@@ -363,12 +364,21 @@ void Vector<T>::insert(std::size_t pos, std::initializer_list<T> ilist) {
 }
 
 template <typename T>
-void Vector<T>::remove(std::size_t pos) {
+void Vector<T>::erase(std::size_t pos) {
     if (pos >= size())
         throw std::out_of_range("Index out of range");
     
     std::move(begin() + pos + 1, end(), begin() + pos);
     resize(size() - 1, T());
+}
+
+template <typename T>
+void Vector<T>::erase(std::size_t first, std::size_t last) {
+    if (first >= size() || last > size() || first >= last)
+        throw std::out_of_range("Invalid range");
+    
+    std::move(entries.get() + last, entries.get() + size(), entries.get() + first);
+    resize(size() - (last - first));
 }
 
 template <typename T>
