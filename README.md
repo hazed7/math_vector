@@ -146,6 +146,11 @@ Vector& operator-(const Vector&);
 T magnitude() const;
 ```
 
+- Calculate the mean of a vector
+```cpp
+T mean() const;
+```
+
 - Calculate the dot product of two vectors
 ```cpp
 friend T dot_product(const Vector&);
@@ -164,6 +169,9 @@ friend Vector cross_product(const Vector&, const Vector&);
 friend std::ostream& operator<<(std::ostream&, Vector<A> const&);
 ```
 
+---
+### Other
+- Overloaded std::swap
 
 
 
