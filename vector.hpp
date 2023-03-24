@@ -33,6 +33,8 @@ public:
     T sum() const;
     T product() const;
     
+    void normalize();
+    
     T& operator[](std::size_t);
     bool operator==(const Vector&) const;
     bool operator!=(const Vector&) const;
@@ -54,7 +56,7 @@ public:
     Vector& operator-(const Vector&);
     
     template <typename A>
-    friend T dot_product(const Vector<A>&);
+    friend A dot_product(const Vector<A>&, const Vector<A>&);
     
     template <typename A>
     friend Vector cross_product(const Vector<A>&, const Vector<A>&);
@@ -229,6 +231,17 @@ T Vector<T>::sum() const {
 template <typename T>
 T Vector<T>::product() const {
     return std::accumulate(entries.get(), entries.get() + size(), T(1), std::multiplies<>());
+}
+
+template <typename T>
+void Vector<T>::normalize() {
+    static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>, "Vector should consist of double or float types");
+    
+    T mag = magnitude();
+    if (mag == 0)
+        return;
+    
+    *this *= 1 / mag;
 }
 
 template <typename T>
