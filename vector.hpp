@@ -53,6 +53,7 @@ public:
     void remove(std::size_t);
     
     T& operator[](std::size_t);
+    const T& operator[](std::size_t) const;
     bool operator==(const Vector&) const;
     bool operator!=(const Vector&) const;
     
@@ -76,7 +77,7 @@ public:
     friend A dot_product(const Vector<A>&, const Vector<A>&);
     
     template <typename A>
-    friend Vector cross_product(const Vector<A>&, const Vector<A>&);
+    friend Vector<A> cross_product(const Vector<A>&, const Vector<A>&);
     
     template <typename A>
     friend std::ostream& operator<<(std::ostream&, Vector<A> const&);
@@ -362,6 +363,14 @@ T& Vector<T>::operator[](std::size_t i) {
 }
 
 template <typename T>
+const T& Vector<T>::operator[](std::size_t i) const {
+    if (i > size())
+        throw std::out_of_range("Index out of range");
+    
+    return entries[i];
+}
+
+template <typename T>
 bool Vector<T>::operator==(const Vector& other) const {
     return entries == other.entries;
 }
@@ -439,18 +448,16 @@ T dot_product(const Vector<T>& u, const Vector<T>& v) {
 
 template <typename T>
 Vector<T> cross_product(const Vector<T>& lhs, const Vector<T>& rhs) {
-    if (lhs.size() != rhs.size())
-        throw std::invalid_argument("Vectors must have the same size");
+    if (lhs.size() != rhs.size() || lhs.size() < 3)
+        throw std::invalid_argument("Vectors must have at least 3 elements and have the same size");
     
     Vector<T> w(lhs.size());
-    for (std::size_t i = 0; i < lhs.size(); i++) {
-        w[i] = std::inner_product(lhs.entries.get(),
-                                  lhs.entries.get() + lhs.size(),
-                                  rhs.entries.get(), T(),
-                                  std::minus<>(),
-                                  [i](T x, T y) {
-                                      return x * y[i];
-                                  });
+    w[0] = lhs[1] * rhs[2] - lhs[2] * rhs[1];
+    w[1] = lhs[2] * rhs[0] - lhs[0] * rhs[2];
+    w[2] = lhs[0] * rhs[1] - lhs[1] * rhs[0];
+
+    for (std::size_t i = 3; i < lhs.size(); i++) {
+        w[i] = lhs[(i + 1) % lhs.size()] * rhs[(i + 2) % rhs.size()] - lhs[(i + 2) % lhs.size()] * rhs[(i + 1) % rhs.size()];
     }
     
     return w;

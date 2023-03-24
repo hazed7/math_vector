@@ -73,6 +73,7 @@ Vector(Vector&&);
 - Access individual elements of the vector using the [] operator
 ```cpp
 T& operator[](std::size_t);
+const T& operator[](std::size_t) const;
 ```
 
 - Get a pointer to the first element of the vector using the begin() iterator
@@ -207,7 +208,7 @@ friend T dot_product(const Vector<A>&);
 
 - Calculate the cross product of two vectors
 ```cpp
-friend Vector cross_product(const Vector<A>&, const Vector<A>&);
+friend Vector<A> cross_product(const Vector<A>&, const Vector<A>&);
 ```
 
 - Normalize the vector to have a magnitude of 1
@@ -249,13 +250,10 @@ int main() {
     v2[1] = 5.0;
     v2[2] = 6.0;
 
-    Vector<double> v3 = v1 + v2;
-    std::cout << v3 << std::endl;  // Prints [5, 7, 9]
-
     double dot = dot_product(v1, v2);
     std::cout << dot << std::endl;  // Prints 32
 
-    Vector<double> v4 = cross_product(v1, v2);
+    auto v4 = cross_product(v1, v2);
     std::cout << v4 << std::endl;  // Prints [-3, 6, -3]
 
     return 0;
