@@ -37,12 +37,27 @@ public:
     bool operator==(const Vector&) const;
     bool operator!=(const Vector&) const;
     
+    template <typename A>
+    friend bool operator<(const Vector<A>&, const Vector<A>&);
+    
+    template <typename A>
+    friend bool operator>(const Vector<A>&, const Vector<A>&);
+    
+    template <typename A>
+    friend bool operator<=(const Vector<A>&, const Vector<A>&);
+    
+    template <typename A>
+    friend bool operator>=(const Vector<A>&, const Vector<A>&);
+    
     Vector& operator*=(T);
     Vector& operator+(const Vector&);
     Vector& operator-(const Vector&);
     
-    friend T dot_product(const Vector&);
-    friend Vector cross_product(const Vector&, const Vector&);
+    template <typename A>
+    friend T dot_product(const Vector<A>&);
+    
+    template <typename A>
+    friend Vector cross_product(const Vector<A>&, const Vector<A>&);
     
     template <typename A>
     friend std::ostream& operator<<(std::ostream&, Vector<A> const&);
@@ -229,6 +244,28 @@ bool Vector<T>::operator==(const Vector& other) const {
 template <typename T>
 bool Vector<T>::operator!=(const Vector& other) const {
     return entries != other.entries;
+}
+
+template <typename T>
+bool operator<(const Vector<T>& v1, const Vector<T>& v2) {
+    return std::lexicographical_compare(v1.entries.get(), v1.entries.get() + v1.size(),
+                                        v2.entries.get(), v2.entries.get() + v2.size());
+}
+
+template <typename T>
+bool operator>(const Vector<T>& v1, const Vector<T>& v2) {
+    return std::lexicographical_compare(v2.entries.get(), v2.entries.get() + v2.size(),
+                                        v1.entries.get(), v1.entries.get() + v1.size());
+}
+
+template <typename T>
+bool operator<=(const Vector<T>& v1, const Vector<T>& v2) {
+    return !(v2 < v1);
+}
+
+template <typename T>
+bool operator>=(const Vector<T>& v1, const Vector<T>& v2) {
+    return !(v1 < v2);
 }
 
 template <typename T>
