@@ -158,6 +158,10 @@ void insert(std::size_t pos, std::initializer_list<T> ilist);
 void remove(std::size_t pos);
 ```
 
+- Concatenate two vectors
+```cpp
+friend Vector concat(const Vector&, const Vector&);
+```
 
 ---
 

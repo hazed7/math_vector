@@ -39,6 +39,9 @@ public:
     
     Vector subvec(std::size_t, std::size_t) const;
     
+    template <typename A>
+    friend Vector<A> concat(const Vector<A>&, const Vector<A>&);
+    
     void insert(std::size_t, const T&); // insert
     void insert(std::size_t, std::size_t, const T&); // insert specific amount of values
     
@@ -289,6 +292,16 @@ Vector<T> Vector<T>::subvec(std::size_t start, std::size_t end) const {
     std::copy(entries.get() + start, entries.get() + end,sub.entries.get());
     
     return sub;
+}
+
+template <typename T>
+Vector<T> concat(const Vector<T>& v1, const Vector<T>& v2) {
+    Vector<T> result(v1.size() + v2.size());
+
+    std::copy(v1.begin(), v1.end(), result.begin());
+    std::copy(v2.begin(), v2.end(), result.begin() + v1.size());
+
+    return result;
 }
 
 template <typename T>
