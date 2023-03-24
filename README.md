@@ -201,6 +201,11 @@ T magnitude() const;
 T mean() const;
 ```
 
+- Calculate the median of a vector
+```cpp
+T median() const;
+```
+
 - Calculate the dot product of two vectors
 ```cpp
 friend T dot_product(const Vector<A>&);

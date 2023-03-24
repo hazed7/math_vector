@@ -26,6 +26,7 @@ public:
     T magnitude() const;
     
     T mean() const;
+    T median() const;
     
     std::variant<T, std::vector<std::size_t>> max() const;
     std::variant<T, std::vector<std::size_t>> min() const;
@@ -191,6 +192,22 @@ T Vector<T>::mean() const {
         throw std::logic_error("Vector is empty");
     
     return sum() / size_;
+}
+
+template <typename T>
+T Vector<T>::median() const {
+    if (size() == 0)
+        throw std::length_error("Cannot calculate median of an empty vector");
+    
+    const auto middle_idx = size_ / 2;
+    std::nth_element(entries.get(), entries.get() + middle_idx, entries.get() + size_);
+    
+    if (size_ & 1)
+        return entries[middle_idx];
+    
+    const auto& lower_middle = entries[middle_idx - 1];
+    const auto& upper_midle = entries[middle_idx];
+    return (lower_middle + upper_midle) / 2;
 }
 
 /*
