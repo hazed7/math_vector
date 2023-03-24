@@ -156,7 +156,12 @@ void insert(std::size_t pos, std::initializer_list<T> ilist);
 
 - Remove value at index
 ```cpp
-void remove(std::size_t pos);
+void erase(std::size_t pos);
+```
+
+- Remove value in a range
+```cpp
+void erase(std::size_t first, std::size_t last);
 ```
 
 - Concatenate two vectors
