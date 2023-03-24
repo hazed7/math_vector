@@ -1,5 +1,5 @@
 ## TL;DR
-C++17 class template single file library that represent mathematical vector, a quantity that has both magnitude and direction.
+C++17 templated single file library that represents mathematical vector, a quantity that has both magnitude and direction.
 
 
 
