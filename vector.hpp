@@ -34,6 +34,7 @@ public:
     T product() const;
     
     void normalize();
+    void clear();
     
     Vector subvec(std::size_t, std::size_t) const;
     
@@ -244,6 +245,12 @@ void Vector<T>::normalize() {
         return;
     
     *this *= 1 / mag;
+}
+
+template <typename T>
+void Vector<T>::clear() {
+    size_ = 0;
+    entries.reset();
 }
 
 template <typename T>

@@ -128,6 +128,11 @@ std::variant<T, std::vector<std::size_t>> min() const;
 Vector subvec(std::size_t, std::size_t) const;
 ```
 
+- Clear vector
+```cpp
+void clean();
+```
+
 ---
 
 ### Operations
