@@ -39,6 +39,16 @@ public:
     
     Vector subvec(std::size_t, std::size_t) const;
     
+    void insert(std::size_t, const T&); // insert
+    void insert(std::size_t, std::size_t, const T&); // insert specific amount of values
+    
+    template <typename InputIt>
+    void insert(std::size_t, InputIt, InputIt);
+    
+    void insert(std::size_t, std::initializer_list<T>);
+    
+    void remove(std::size_t);
+    
     T& operator[](std::size_t);
     bool operator==(const Vector&) const;
     bool operator!=(const Vector&) const;
@@ -74,6 +84,7 @@ public:
     
     T* end();
     const T* end() const;
+    
 private:
     std::size_t size_;
     std::unique_ptr<T[]> entries;
@@ -271,7 +282,7 @@ void Vector<T>::resize(std::size_t size, const T& default_value) {
 
 template <typename T>
 Vector<T> Vector<T>::subvec(std::size_t start, std::size_t end) const {
-    if (start >= end || end > size_)
+    if (start >= end || end > size())
         throw std::out_of_range("Invalid range for subvector");
     
     Vector<T> sub(end - start);
@@ -281,7 +292,59 @@ Vector<T> Vector<T>::subvec(std::size_t start, std::size_t end) const {
 }
 
 template <typename T>
+void Vector<T>::insert(std::size_t pos, const T& value) {
+    if (pos > size())
+        throw std::out_of_range("Index out of range");
+    
+    resize(size_ + 1, T());
+    std::move_backward(entries.get() + pos, entries.get() + size_ - 1, entries.get() + size_);
+    
+    entries[pos] = value;
+}
+
+template <typename T>
+void Vector<T>::insert(std::size_t pos, std::size_t count, const T& value) {
+    if (pos > size())
+        throw std::out_of_range("Index out of range");
+    
+    resize(size_ + count, T());
+    
+    std::move_backward(entries.get() + pos, entries.get() + size_ - count, entries.get() + size_);
+    std::fill_n(entries.get() + pos, count, value);
+}
+
+template <typename T>
+template <typename InputIt>
+void Vector<T>::insert(std::size_t pos, InputIt first, InputIt last) {
+    if (pos > size())
+        throw std::out_of_range("Index out of range");
+    
+    const std::size_t count = std::distance(first, last);
+    resize(size_ + count, T());
+    
+    std::move_backward(entries.get() + pos, entries.get() + size_ - count, entries.get() + size_);
+    std::copy(first, last, entries.get() + pos);
+}
+
+template <typename T>
+void Vector<T>::insert(std::size_t pos, std::initializer_list<T> ilist) {
+    insert(pos, ilist.begin(), ilist.end());
+}
+
+template <typename T>
+void Vector<T>::remove(std::size_t pos) {
+    if (pos >= size())
+        throw std::out_of_range("Index out of range");
+    
+    std::move(begin() + pos + 1, end(), begin() + pos);
+    resize(size() - 1, T());
+}
+
+template <typename T>
 T& Vector<T>::operator[](std::size_t i) {
+    if (i > size())
+        throw std::out_of_range("Index out of range");
+    
     return entries[i];
 }
 

@@ -138,6 +138,27 @@ void clear();
 void resize(std::size_t size, const T& default_value);
 ```
 
+- Insert methods
+```cpp
+// Insert a single value at the specified position in the vector
+void insert(std::size_t pos, const T& value);
+
+// Insert multiple copies of a value at the specified position in the vector
+void insert(std::size_t pos, std::size_t count, const T& value);
+
+// Insert a range of elements, specified by iterators [first, last], at the specified position in the vector
+void insert(std::size_t pos, InputIt first, InputIt last);
+
+// Insert elements from an initializer list at the specified position in the vector
+void insert(std::size_t pos, std::initializer_list<T> ilist);
+```
+
+- Remove value at index
+```cpp
+void remove(std::size_t pos);
+```
+
+
 ---
 
 ### Operations
