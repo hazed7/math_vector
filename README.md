@@ -96,6 +96,15 @@ bool operator==(const Vector&) const;
 bool operator!=(const Vector&) const;
 ```
 
+- Compare two vectors (std::less, std::greater, std::less_equal, std::greater_equal)
+```cpp
+friend bool operator<(const Vector<A>&, const Vector<A>&);
+friend bool operator>(const Vector<A>&, const Vector<A>&);
+
+friend bool operator<=(const Vector<A>&, const Vector<A>&);
+friend bool operator>=(const Vector<A>&, const Vector<A>&);
+```
+
 ---
 
 ### Utils
@@ -153,12 +162,12 @@ T mean() const;
 
 - Calculate the dot product of two vectors
 ```cpp
-friend T dot_product(const Vector&);
+friend T dot_product(const Vector<A>&);
 ```
 
 - Calculate the cross product of two vectors
 ```cpp
-friend Vector cross_product(const Vector&, const Vector&);
+friend Vector cross_product(const Vector<A>&, const Vector<A>&);
 ```
 
 ---
