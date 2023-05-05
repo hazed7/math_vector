@@ -1,27 +1,14 @@
 ## TL;DR
-C++17 templated single file library that represents mathematical vector, a quantity that has both magnitude and direction.
+C++17 templated single file library that represents mathematical vector
 
 
 
 
 ## TOC
-- [1. Introduction](#introduction)
-- [2. Getting Started](#installation)
-- [3. Features](#features)
-- [4. Usage](#usage)
-- [5. License](#license)
-
-
-
-
-
-
-## Introduction
-A vector is typically represented by an ordered set of numbers, called its components. In Vector, the components are of type T, which can be any arithmetic type.
-
-Vector provides various operations that can be performed on vectors, including finding their magnitude, dot product, cross product, and more.
-
-
+- [1. Getting Started](#installation)
+- [2. Features](#features)
+- [3. Usage](#usage)
+- [4. License](#license)
 
 
 
